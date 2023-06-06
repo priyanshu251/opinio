@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage>
                         ),
                         InkWell(
                           highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
+                          splashColor: Colors.grey,
                           onTap: () {
                             Navigator.push(
                                 context,
@@ -155,7 +155,7 @@ class _HomePageState extends State<HomePage>
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

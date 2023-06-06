@@ -10,13 +10,14 @@ class FeedbackPage extends StatefulWidget {
 }
 
 class _FeedbackPageState extends State<FeedbackPage> {
-  Color? disabledUpIconColor = Color.fromARGB(255, 135, 135, 135);
-  Color? disabledDownIconColor = Color.fromARGB(255, 135, 135, 135);
+  Color? disabledUpIconColor = const Color.fromARGB(255, 135, 135, 135);
+  Color? disabledDownIconColor = const Color.fromARGB(255, 135, 135, 135);
   Color? abledUpIconColor = Colors.green[400];
   Color? abledDownIconColor = Colors.red[400];
   double? safetyRating = 3;
   double? communicationRating = 3;
   double? accuracyRating = 3;
+  String? selectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +30,27 @@ class _FeedbackPageState extends State<FeedbackPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: const EdgeInsets.fromLTRB(9, 10, 10, 9),
-                child: const Text(
-                  'Leave a review',
-                  style: TextStyle(
-                      fontSize: 50,
-                      fontFamily: "alkatra",
-                      fontWeight: FontWeight.w500),
+                padding: const EdgeInsets.fromLTRB(20, 0, 12, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Leave a review',
+                      style: TextStyle(
+                          fontSize: 45,
+                          fontFamily: "alkatra",
+                          fontWeight: FontWeight.w500),
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        size: 40,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
                 ),
               ),
               Expanded(
@@ -44,32 +59,37 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     children: [
                       ratingCard(
                           screenHeight,
-                          'Safety',
-                          'How safe did softwares are ?',
+                          'Rate Us',
+                          'How much are you satsfied',
                           safetyRating!, (userSafetyRating) {
                         setState(() {
                           safetyRating = userSafetyRating;
                         });
                       }),
-                      ratingCard(
-                          screenHeight,
-                          'Communication',
-                          'Was there equal flow of communication',
-                          communicationRating!, (userCommunicationRating) {
-                        setState(() {
-                          communicationRating = userCommunicationRating;
-                        });
-                      }),
-                      ratingCard(
-                          screenHeight,
-                          'Accuracy',
-                          'Did our softwares get your job done accurately',
-                          accuracyRating!, (userAccuracyRating) {
-                        setState(() {
-                          accuracyRating = userAccuracyRating;
-                        });
-                      }),
+                      // ratingCard(
+                      //     screenHeight,
+                      //     'Communication',
+                      //     'Was there equal flow of communication',
+                      //     communicationRating!, (userCommunicationRating) {
+                      //   setState(() {
+                      //     communicationRating = userCommunicationRating;
+                      //   });
+                      // }),
+                      // ratingCard(
+                      //     screenHeight,
+                      //     'Accuracy',
+                      //     'Did our softwares get your job done accurately',
+                      //     accuracyRating!, (userAccuracyRating) {
+                      //   setState(() {
+                      //     accuracyRating = userAccuracyRating;
+                      //   });
+                      // }),
                       recommendationCard(screenHeight),
+                      textFeildCard(screenHeight),
+                      submitReviewButton(screenWidth),
+                      SizedBox(
+                        height: screenHeight * 0.02,
+                      ),
                     ],
                   ),
                 ),
@@ -77,6 +97,81 @@ class _FeedbackPageState extends State<FeedbackPage> {
             ],
           ),
         ));
+  }
+
+  Container textFeildCard(double screenHeight) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0xffDDDDDD),
+            blurRadius: 6.0,
+            spreadRadius: 2.0,
+            offset: Offset(0.0, 0.0),
+          )
+        ],
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Care to share more about it ?',
+              style: kreviewDescription),
+          SizedBox(
+            height: screenHeight * 0.01,
+          ),
+          SizedBox(
+            height: 200, //TextField expands to this height.
+            child: TextField(
+              onChanged: (value) {},
+              textAlignVertical: TextAlignVertical.top,
+              maxLines: null,
+              expands: true,
+              keyboardType: TextInputType.multiline,
+              decoration:
+                  kTextFieldDecoration.copyWith(hintText: 'write here...'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  InkWell submitReviewButton(double screenWidth) {
+    return InkWell(
+      highlightColor: Colors.transparent,
+      splashColor: Color.fromARGB(0, 209, 207, 207),
+      onTap: () {
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: ((context) => )));
+      },
+      child: Container(
+        height: screenWidth / 8,
+        width: screenWidth * 0.4,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromARGB(255, 75, 170, 218),
+                Color.fromARGB(255, 0, 61, 90),
+              ]),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: const Text(
+          "SUBMIT REVIEW",
+          style: TextStyle(
+              color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),
+        ),
+      ),
+    );
   }
 
   Container recommendationCard(double screenHeight) {
@@ -100,34 +195,43 @@ class _FeedbackPageState extends State<FeedbackPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Text('Would you recommmend the Sigma IT softwares ?',
-              style: kreviewTitle),
+          const Text('Select one option', style: kreviewTitle),
           SizedBox(
             height: screenHeight * 0.01,
           ),
-          Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(
-                icon:
-                    Icon(Icons.thumb_up, size: 40, color: disabledUpIconColor),
-                onPressed: () {
+              RadioListTile(
+                title: const Text("1"),
+                value: "1",
+                groupValue: selectedValue,
+                onChanged: (value) {
                   setState(() {
-                    disabledUpIconColor = abledUpIconColor;
+                    selectedValue = value.toString();
                   });
                 },
               ),
-              const SizedBox(
-                width: 65,
-              ),
-              IconButton(
-                icon: Icon(Icons.thumb_down,
-                    size: 40, color: disabledDownIconColor),
-                onPressed: () {
+              RadioListTile(
+                title: const Text("2"),
+                value: "2",
+                groupValue: selectedValue,
+                onChanged: (value) {
                   setState(() {
-                    disabledDownIconColor = abledDownIconColor;
+                    selectedValue = value.toString();
                   });
                 },
               ),
+              RadioListTile(
+                title: const Text("3"),
+                value: "3",
+                groupValue: selectedValue,
+                onChanged: (value) {
+                  setState(() {
+                    selectedValue = value.toString();
+                  });
+                },
+              )
             ],
           ),
           SizedBox(

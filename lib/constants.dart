@@ -26,7 +26,7 @@ const kreviewTitle = TextStyle(
 
 const kreviewDescription = TextStyle(fontSize: 17);
 
-const krating = TextStyle(fontSize: 15, fontWeight: FontWeight.bold);
+const krating = TextStyle(fontSize: 18);
 
 const kTextFieldDecoration = InputDecoration(
   hintStyle: TextStyle(

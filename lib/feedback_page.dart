@@ -77,21 +77,21 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Container textFeildCard(double screenHeight) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+      margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
       padding: const EdgeInsets.all(12),
       decoration: kCardDecoration,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Care to share more about it ?',
-              style: kreviewDescription),
+          const Text('Tell us how can we improve', style: kreviewTitle),
           SizedBox(
-            height: screenHeight * 0.01,
+            height: screenHeight * 0.001,
           ),
           SizedBox(
             height: 120, //TextField expands to this height.
             child: TextField(
               onChanged: (value) {},
+              style: krating,
               textAlignVertical: TextAlignVertical.top,
               maxLines: null,
               expands: true,
@@ -105,49 +105,52 @@ class _FeedbackPageState extends State<FeedbackPage> {
     );
   }
 
-  InkWell submitReviewButton(double screenWidth) {
-    return InkWell(
-      highlightColor: Colors.transparent,
-      splashColor: const Color.fromARGB(0, 209, 207, 207),
-      onTap: () {
-        Alert(
-          style: const AlertStyle(
-            backgroundColor: Color(0xFFEDD3D3),
-            animationType: AnimationType.fromBottom,
-            isCloseButton: false,
-            descStyle: TextStyle(
-                fontFamily: 'alkatra',
-                fontSize: 25,
-                fontWeight: FontWeight.normal),
-          ),
-          context: context,
-          desc: "Your feedback is submitted",
-          image: Image.asset("images/feedback1.png"),
-          buttons: [
-            DialogButton(
-              child: const Text(
-                "BACK",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              onPressed: () => Navigator.pop(context),
-              color: const Color(0xFF68A4C3),
-              radius: BorderRadius.circular(8.0),
+  Widget submitReviewButton(double screenWidth) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: InkWell(
+        highlightColor: Colors.transparent,
+        splashColor: const Color.fromARGB(0, 209, 207, 207),
+        onTap: () {
+          Alert(
+            style: const AlertStyle(
+              backgroundColor: Color(0xFFEDD3D3),
+              animationType: AnimationType.fromBottom,
+              isCloseButton: false,
+              descStyle: TextStyle(
+                  fontFamily: 'alkatra',
+                  fontSize: 25,
+                  fontWeight: FontWeight.normal),
             ),
-          ],
-        ).show();
-      },
-      child: Container(
-        height: screenWidth / 8,
-        width: screenWidth * 0.4,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          gradient: kButtonGradient,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: const Text(
-          "SUBMIT REVIEW",
-          style: TextStyle(
-              color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),
+            context: context,
+            desc: "Your feedback is submitted",
+            image: Image.asset("images/feedback1.png"),
+            buttons: [
+              DialogButton(
+                child: const Text(
+                  "BACK",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(context),
+                color: const Color(0xFF68A4C3),
+                radius: BorderRadius.circular(8.0),
+              ),
+            ],
+          ).show();
+        },
+        child: Container(
+          height: screenWidth / 8,
+          width: screenWidth * 0.4,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            gradient: kButtonGradient,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: const Text(
+            "SUBMIT REVIEW",
+            style: TextStyle(
+                color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),
+          ),
         ),
       ),
     );
@@ -156,7 +159,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Container recommendationCard(double screenHeight) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+      margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
       padding: const EdgeInsets.all(12),
       decoration: kCardDecoration,
       child: Column(
@@ -214,7 +217,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
       void Function(double) onChanged) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+      margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
       padding: const EdgeInsets.all(12),
       decoration: kCardDecoration,
       child: Column(

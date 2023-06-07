@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:practice2/constants.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
+// ignore: must_be_immutable
 class FeedbackPage extends StatefulWidget {
   FeedbackPage({Key? key, this.code}) : super(key: key);
   String? code;
@@ -12,11 +14,7 @@ class FeedbackPage extends StatefulWidget {
 class _FeedbackPageState extends State<FeedbackPage> {
   Color? disabledUpIconColor = const Color.fromARGB(255, 135, 135, 135);
   Color? disabledDownIconColor = const Color.fromARGB(255, 135, 135, 135);
-  Color? abledUpIconColor = Colors.green[400];
-  Color? abledDownIconColor = Colors.red[400];
   double? safetyRating = 3;
-  double? communicationRating = 3;
-  double? accuracyRating = 3;
   String? selectedValue;
 
   @override
@@ -25,68 +23,45 @@ class _FeedbackPageState extends State<FeedbackPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF68A4C3),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              size: 40,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         body: SafeArea(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(20, 0, 12, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Leave a review',
-                      style: TextStyle(
-                          fontSize: 45,
-                          fontFamily: "alkatra",
-                          fontWeight: FontWeight.w500),
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        size: 40,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
-              ),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ratingCard(
-                          screenHeight,
-                          'Rate Us',
-                          'How much are you satsfied',
-                          safetyRating!, (userSafetyRating) {
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        child: Text(
+                          'Leave a review',
+                          style: TextStyle(
+                              fontSize: 45,
+                              fontFamily: "alkatra",
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      ratingCard(screenHeight, 'Rate Us', safetyRating!,
+                          (userSafetyRating) {
                         setState(() {
                           safetyRating = userSafetyRating;
                         });
                       }),
-                      // ratingCard(
-                      //     screenHeight,
-                      //     'Communication',
-                      //     'Was there equal flow of communication',
-                      //     communicationRating!, (userCommunicationRating) {
-                      //   setState(() {
-                      //     communicationRating = userCommunicationRating;
-                      //   });
-                      // }),
-                      // ratingCard(
-                      //     screenHeight,
-                      //     'Accuracy',
-                      //     'Did our softwares get your job done accurately',
-                      //     accuracyRating!, (userAccuracyRating) {
-                      //   setState(() {
-                      //     accuracyRating = userAccuracyRating;
-                      //   });
-                      // }),
                       recommendationCard(screenHeight),
                       textFeildCard(screenHeight),
-                      submitReviewButton(screenWidth),
+                      Center(child: submitReviewButton(screenWidth)),
                       SizedBox(
                         height: screenHeight * 0.02,
                       ),
@@ -104,18 +79,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0xffDDDDDD),
-            blurRadius: 6.0,
-            spreadRadius: 2.0,
-            offset: Offset(0.0, 0.0),
-          )
-        ],
-        borderRadius: BorderRadius.circular(10),
-      ),
+      decoration: kCardDecoration,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -125,7 +89,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
             height: screenHeight * 0.01,
           ),
           SizedBox(
-            height: 200, //TextField expands to this height.
+            height: 120, //TextField expands to this height.
             child: TextField(
               onChanged: (value) {},
               textAlignVertical: TextAlignVertical.top,
@@ -144,25 +108,40 @@ class _FeedbackPageState extends State<FeedbackPage> {
   InkWell submitReviewButton(double screenWidth) {
     return InkWell(
       highlightColor: Colors.transparent,
-      splashColor: Color.fromARGB(0, 209, 207, 207),
+      splashColor: const Color.fromARGB(0, 209, 207, 207),
       onTap: () {
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: ((context) => )));
+        Alert(
+          style: const AlertStyle(
+            backgroundColor: Color(0xFFEDD3D3),
+            animationType: AnimationType.fromBottom,
+            isCloseButton: false,
+            descStyle: TextStyle(
+                fontFamily: 'alkatra',
+                fontSize: 25,
+                fontWeight: FontWeight.normal),
+          ),
+          context: context,
+          desc: "Your feedback is submitted",
+          image: Image.asset("images/feedback1.png"),
+          buttons: [
+            DialogButton(
+              child: const Text(
+                "BACK",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              color: const Color(0xFF68A4C3),
+              radius: BorderRadius.circular(8.0),
+            ),
+          ],
+        ).show();
       },
       child: Container(
         height: screenWidth / 8,
         width: screenWidth * 0.4,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromARGB(255, 75, 170, 218),
-                Color.fromARGB(255, 0, 61, 90),
-              ]),
+          gradient: kButtonGradient,
           borderRadius: BorderRadius.circular(15),
         ),
         child: const Text(
@@ -179,18 +158,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0xffDDDDDD),
-            blurRadius: 6.0,
-            spreadRadius: 2.0,
-            offset: Offset(0.0, 0.0),
-          )
-        ],
-        borderRadius: BorderRadius.circular(10),
-      ),
+      decoration: kCardDecoration,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -242,24 +210,13 @@ class _FeedbackPageState extends State<FeedbackPage> {
     );
   }
 
-  Container ratingCard(double screenHeight, String title, String description,
-      double rating, void Function(double) onChanged) {
+  Container ratingCard(double screenHeight, String title, double rating,
+      void Function(double) onChanged) {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0xffDDDDDD),
-            blurRadius: 6.0,
-            spreadRadius: 2.0,
-            offset: Offset(0.0, 0.0),
-          )
-        ],
-        borderRadius: BorderRadius.circular(10),
-      ),
+      decoration: kCardDecoration,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -268,49 +225,18 @@ class _FeedbackPageState extends State<FeedbackPage> {
           SizedBox(
             height: screenHeight * 0.003,
           ),
-          Text(description, style: kreviewDescription),
-          SizedBox(
-            height: screenHeight * 0.02,
-          ),
           RatingBar.builder(
-            itemSize: 50,
             initialRating: 3,
+            minRating: 1,
+            direction: Axis.horizontal,
+            allowHalfRating: true,
             itemCount: 5,
-            itemBuilder: (context, index) {
-              switch (index) {
-                case 0:
-                  return const Icon(
-                    Icons.sentiment_very_dissatisfied,
-                    color: Colors.red,
-                    size: 25,
-                  );
-                case 1:
-                  return const Icon(
-                    Icons.sentiment_dissatisfied,
-                    color: Colors.redAccent,
-                  );
-                case 2:
-                  return const Icon(
-                    Icons.sentiment_neutral,
-                    color: Colors.amber,
-                  );
-                case 3:
-                  return const Icon(
-                    Icons.sentiment_satisfied,
-                    color: Colors.lightGreen,
-                  );
-                case 4:
-                  return const Icon(
-                    Icons.sentiment_very_satisfied,
-                    color: Colors.green,
-                  );
-                default:
-                  return const Icon(
-                    Icons.sentiment_neutral,
-                    color: Colors.amber,
-                  );
-              }
-            },
+            itemSize: 50,
+            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+            itemBuilder: (context, _) => const Icon(
+              Icons.star,
+              color: Colors.amber,
+            ),
             onRatingUpdate: (rating) {
               onChanged(rating);
             },
@@ -324,3 +250,5 @@ class _FeedbackPageState extends State<FeedbackPage> {
     );
   }
 }
+// onRatingUpdate: (rating) {
+//               onChanged(rating);

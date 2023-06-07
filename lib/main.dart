@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:practice2/constants.dart';
 import 'package:practice2/scanner_page.dart';
 
 void main() {
@@ -69,7 +70,6 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -90,11 +90,9 @@ class _HomePageState extends State<HomePage>
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color.fromARGB(255, 104, 164, 195),
+                    Color.fromARGB(255, 130, 198, 232),
                     Color.fromARGB(255, 5, 75, 107),
                     Color.fromARGB(255, 4, 36, 51),
-                    // Color.fromARGB(255, 99, 172, 178),
-                    // Color.fromARGB(255, 12, 54, 57),
                   ],
                 ),
               ),
@@ -131,20 +129,15 @@ class _HomePageState extends State<HomePage>
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: ((context) => ScannerPage())));
+                                    builder: ((context) =>
+                                        const ScannerPage())));
                           },
                           child: Container(
                             height: size.width / 8,
                             width: screenWidth * 0.4,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Color.fromARGB(255, 75, 170, 218),
-                                    Color.fromARGB(255, 0, 61, 90),
-                                  ]),
+                              gradient: kButtonGradient,
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: const Text(

@@ -36,40 +36,33 @@ class _FeedbackPageState extends State<FeedbackPage> {
           ),
         ),
         body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: Text(
-                          'Leave a review',
-                          style: TextStyle(
-                              fontSize: 45,
-                              fontFamily: "alkatra",
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                      ratingCard(screenHeight, 'Rate Us', safetyRating!,
-                          (userSafetyRating) {
-                        setState(() {
-                          safetyRating = userSafetyRating;
-                        });
-                      }),
-                      recommendationCard(screenHeight),
-                      textFeildCard(screenHeight),
-                      Center(child: submitReviewButton(screenWidth)),
-                      SizedBox(
-                        height: screenHeight * 0.02,
-                      ),
-                    ],
+          child: Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(
+                      'Leave a review',
+                      style: TextStyle(
+                          fontSize: 45,
+                          fontFamily: "alkatra",
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
-                ),
+                  ratingCard(screenHeight, 'Rate Us', safetyRating!,
+                      (userSafetyRating) {
+                    setState(() {
+                      safetyRating = userSafetyRating;
+                    });
+                  }),
+                  recommendationCard(screenHeight),
+                  textFeildCard(screenHeight),
+                  Center(child: submitReviewButton(screenWidth)),
+                ],
               ),
-            ],
+            ),
           ),
         ));
   }
@@ -77,7 +70,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Container textFeildCard(double screenHeight) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+      margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
       padding: const EdgeInsets.all(12),
       decoration: kCardDecoration,
       child: Column(
@@ -88,7 +81,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
             height: screenHeight * 0.001,
           ),
           SizedBox(
-            height: 120, //TextField expands to this height.
+            height: 160, //TextField expands to this height.
             child: TextField(
               onChanged: (value) {},
               style: krating,
@@ -107,7 +100,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   Widget submitReviewButton(double screenWidth) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
       child: InkWell(
         highlightColor: Colors.transparent,
         splashColor: const Color.fromARGB(0, 209, 207, 207),
@@ -159,7 +152,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Container recommendationCard(double screenHeight) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+      margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
       padding: const EdgeInsets.all(12),
       decoration: kCardDecoration,
       child: Column(
@@ -167,14 +160,12 @@ class _FeedbackPageState extends State<FeedbackPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           const Text('Select one option', style: kreviewTitle),
-          SizedBox(
-            height: screenHeight * 0.01,
-          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               RadioListTile(
-                title: const Text("1"),
+                contentPadding: const EdgeInsets.all(0),
+                title: const Text("1", style: krating),
                 value: "1",
                 groupValue: selectedValue,
                 onChanged: (value) {
@@ -184,7 +175,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 },
               ),
               RadioListTile(
-                title: const Text("2"),
+                contentPadding: const EdgeInsets.all(0),
+                title: const Text("2", style: krating),
                 value: "2",
                 groupValue: selectedValue,
                 onChanged: (value) {
@@ -194,7 +186,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 },
               ),
               RadioListTile(
-                title: const Text("3"),
+                contentPadding: const EdgeInsets.all(0),
+                title: const Text("3", style: krating),
                 value: "3",
                 groupValue: selectedValue,
                 onChanged: (value) {
@@ -205,9 +198,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
               )
             ],
           ),
-          SizedBox(
-            height: screenHeight * 0.02,
-          ),
         ],
       ),
     );
@@ -217,7 +207,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
       void Function(double) onChanged) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+      margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
       padding: const EdgeInsets.all(12),
       decoration: kCardDecoration,
       child: Column(
